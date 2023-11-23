@@ -176,7 +176,7 @@ INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_kl
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (29, TO_DATE('2023-12-01', 'YYYY-MM-DD'), 'Zrealizowane', 4, 4);
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (30, TO_DATE('2023-12-06', 'YYYY-MM-DD'), 'W trakcie', 5, 5);
 
-
+--wyrzucic cene jednostkowa
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk, cena_jednostkowa) VALUES (1, 1, 1, 3, 19.99);
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk, cena_jednostkowa) VALUES (2, 1, 3, 2, 79.99);
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk, cena_jednostkowa) VALUES (3, 1, 2, 1, 39.99);
