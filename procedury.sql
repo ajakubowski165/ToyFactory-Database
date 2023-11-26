@@ -8,6 +8,8 @@ CREATE OR REPLACE FUNCTION ObliczKwoteZamowieniaFFFFF(
   id_zamowienia_param IN INTEGER
 ) RETURN NUMBER IS
   v_suma_kwoty NUMBER := 0;
+
+
 BEGIN
   -- Kursor sparametryzowany
   FOR rekord IN (SELECT pz.ilosc_sztuk, z.cena
@@ -25,7 +27,7 @@ END;
 
 
 DECLARE
-  v_id_zamowienia INTEGER := 1; -
+  v_id_zamowienia INTEGER := 1;
   v_suma_kwoty NUMBER;
 BEGIN
   v_suma_kwoty := ObliczKwoteZamowieniaFFFFF(id_zamowienia_param => v_id_zamowienia);
@@ -378,4 +380,354 @@ END;
 
 
 
+
+
+
+--PAKIET 1 - ZARZADZANIE ZAMOWIENIAMI
+
+-------------------------------------------PROCEDURY------------------------------------------------------
+
+
+--DODAWANIE WPISU MAGAZYNOWEGO
+
+CREATE OR REPLACE PROCEDURE Dodaj_Wpis_Magazynowy (
+    p_data_wpisu DATE,
+    p_ilosc_sztuk INTEGER,
+    p_id_zabawki INTEGER,
+    p_id_pracownika INTEGER
+) AS
+	v_id_wpisu INTEGER;
+
+BEGIN
+	SELECT COALESCE(MAX(id_wpisu) + 1, 1)
+    INTO v_id_wpisu
+    FROM Wpisy_magazynowe;
+    
+    INSERT INTO Wpisy_Magazynowe (id_wpisu, data_wpisu, ilosc_sztuk, id_zabawki, id_pracownika)
+    VALUES (v_id_wpisu, p_data_wpisu, p_ilosc_sztuk, p_id_zabawki, p_id_pracownika);
+
+    COMMIT;
+    
+    DBMS_OUTPUT.PUT_LINE('Warehouse entry added successfully.');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        ROLLBACK;
+END Dodaj_Wpis_Magazynowy;
+/
+
+DECLARE
+    v_data_wpisu DATE := SYSDATE; -- You can change this value to the desired date
+    v_ilosc_sztuk INTEGER := 10;  -- You can change this value to the desired quantity
+    v_id_zabawki INTEGER := 1;    -- You can change this value to the desired toy ID
+    v_id_pracownika INTEGER := 1; -- You can change this value to the desired employee ID
+BEGIN
+    Dodaj_Wpis_Magazynowy(v_data_wpisu, v_ilosc_sztuk, v_id_zabawki, v_id_pracownika);
+END;
+/
+
+-----------------
+
+
+CREATE OR REPLACE PROCEDURE Aktualizuj_Ilosc_Zabawek (
+    p_id_zabawki INTEGER,
+    p_nowa_ilosc INTEGER
+)
+IS
+    CURSOR toy_cursor IS
+        SELECT dostepna_ilosc
+        FROM Zabawki
+        WHERE id_zabawki = p_id_zabawki
+        FOR UPDATE OF dostepna_ilosc;
+
+    v_stara_ilosc INTEGER;
+BEGIN
+    OPEN toy_cursor;
+    FETCH toy_cursor INTO v_stara_ilosc;
+
+    IF toy_cursor%FOUND THEN
+        UPDATE Zabawki
+        SET dostepna_ilosc = p_nowa_ilosc
+        WHERE CURRENT OF toy_cursor;
+
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Quantity of toys updated successfully.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Toy with ID ' || p_id_zabawki || ' not found.');
+    END IF;
+
+    CLOSE toy_cursor;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        ROLLBACK;
+END Aktualizuj_Ilosc_Zabawek;
+/
+
+DECLARE
+    v_id_zabawki INTEGER := 1;    -- You can change this value to the desired toy ID
+    v_nowa_ilosc INTEGER := 20;   -- You can change this value to the desired quantity
+BEGIN
+    Aktualizuj_Ilosc_Zabawek(v_id_zabawki, v_nowa_ilosc);
+END;
+/
+
+select * from zabawki;
+
+----------------
+
+CREATE OR REPLACE PROCEDURE Zmien_Informacje_O_Pracowniku (
+    p_id_pracownika INTEGER,
+    p_nowe_imie VARCHAR2,
+    p_nowe_nazwisko VARCHAR2,
+    p_nowy_nr_telefonu INTEGER,
+    p_nowe_wynagrodzenie INTEGER,
+    p_nowe_stanowisko VARCHAR2,
+    p_nowy_id_adresu INTEGER,
+    p_nowy_nr_ulicy VARCHAR2
+)
+IS
+BEGIN
+    UPDATE Pracownicy
+    SET
+        imie = p_nowe_imie,
+        nazwisko = p_nowe_nazwisko,
+        nr_telefonu = p_nowy_nr_telefonu,
+        wynagrodzenie_podstawowe = p_nowe_wynagrodzenie,
+        stanowisko = p_nowe_stanowisko,
+        id_adresu = p_nowy_id_adresu,
+        nr_ulicy = p_nowy_nr_ulicy
+    WHERE id_pracownika = p_id_pracownika;
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Employee information updated successfully.');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        ROLLBACK;
+END Zmien_Informacje_O_Pracowniku;
+/
+
+DECLARE
+    v_id_pracownika INTEGER := 1;  -- You can change this value to the desired employee ID
+    v_nowe_imie VARCHAR2(20 CHAR) := 'NewFirstName';
+    v_nowe_nazwisko VARCHAR2(30 CHAR) := 'NewLastName';
+    v_nowy_nr_telefonu INTEGER := 123456789;  -- You can change this value to the desired phone number
+    v_nowe_wynagrodzenie INTEGER := 50000;    -- You can change this value to the desired salary
+    v_nowe_stanowisko VARCHAR2(30 CHAR) := 'NewPosition';
+    v_nowy_id_adresu INTEGER := 2;  -- You can change this value to the desired address ID
+    v_nowy_nr_ulicy VARCHAR2(30 CHAR) := 'NewStreetNumber';
+BEGIN
+    Zmien_Informacje_O_Pracowniku(
+        v_id_pracownika,
+        v_nowe_imie,
+        v_nowe_nazwisko,
+        v_nowy_nr_telefonu,
+        v_nowe_wynagrodzenie,
+        v_nowe_stanowisko,
+        v_nowy_id_adresu,
+        v_nowy_nr_ulicy
+    );
+END;
+/
+
+
+---------------------
+
+CREATE OR REPLACE PROCEDURE Dodaj_Zabawke (
+    p_nazwa VARCHAR2,
+    p_cena NUMBER,
+    p_dostepna_ilosc INTEGER,
+    p_id_kategorii INTEGER,
+    p_id_materialu INTEGER
+)
+AS
+    v_id_zabawki INTEGER;
+BEGIN
+
+    SELECT COALESCE(MAX(id_zabawki) + 1, 1)
+    INTO v_id_zabawki
+    FROM Zabawki;
+    -- Insert the new toy
+    INSERT INTO Zabawki (id_zabawki, nazwa, cena, dostepna_ilosc, id_kategorii, id_materialu)
+    VALUES (v_id_zabawki, p_nazwa, p_cena, p_dostepna_ilosc, p_id_kategorii, p_id_materialu);
+
+    COMMIT;
+
+    -- Fetch the newly inserted toy using a cursor
+    FOR toy_rec IN (SELECT * FROM Zabawki WHERE id_zabawki = v_id_zabawki)
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('New toy added successfully:');
+        DBMS_OUTPUT.PUT_LINE('ID: ' || toy_rec.id_zabawki);
+        DBMS_OUTPUT.PUT_LINE('Name: ' || toy_rec.nazwa);
+        DBMS_OUTPUT.PUT_LINE('Price: ' || toy_rec.cena);
+        DBMS_OUTPUT.PUT_LINE('Available Quantity: ' || toy_rec.dostepna_ilosc);
+        DBMS_OUTPUT.PUT_LINE('Category ID: ' || toy_rec.id_kategorii);
+        DBMS_OUTPUT.PUT_LINE('Material ID: ' || toy_rec.id_materialu);
+    END LOOP;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        ROLLBACK;
+END Dodaj_Zabawke;
+
+DECLARE
+    v_nazwa VARCHAR2(30 CHAR) := 'NewToy';
+    v_cena NUMBER := 29.99;
+    v_dostepna_ilosc INTEGER := 100;
+    v_id_kategorii INTEGER := 1;   -- You can change this value to the desired category ID
+    v_id_materialu INTEGER := 1;   -- You can change this value to the desired material ID
+BEGIN
+    Dodaj_Zabawke(v_nazwa, v_cena, v_dostepna_ilosc, v_id_kategorii, v_id_materialu);
+END;
+/
+
+
+-------------------------------FUNKCJE----------------------------------
+
+
+CREATE OR REPLACE FUNCTION Oblicz_Srednia_Pensje_Pracownikow_Na_Stanowisku(
+    p_stanowisko VARCHAR2
+)
+RETURN NUMBER
+IS
+    v_srednia_pensja NUMBER;
+BEGIN
+    SELECT AVG(wynagrodzenie_podstawowe)
+    INTO v_srednia_pensja
+    FROM Pracownicy
+    WHERE stanowisko = p_stanowisko;
+
+    RETURN v_srednia_pensja;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Brak danych dla stanowiska: ' || p_stanowisko);
+        RETURN NULL;
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Błąd: ' || SQLERRM);
+        RETURN NULL;
+END Oblicz_Srednia_Pensje_Pracownikow_Na_Stanowisku;
+/
+    
+DECLARE
+    v_avg_salary NUMBER;
+BEGIN
+    v_avg_salary := Oblicz_Srednia_Pensje_Pracownikow_Na_Stanowisku('Magazynier');
+    DBMS_OUTPUT.PUT_LINE('Średnia Pensja: ' || v_avg_salary);
+END;
+/
+
+
+---------
+
+DECLARE
+  raport_wpisow INTEGER;
+BEGIN
+  raport_wpisow := Raport_Wpisow_Magazynowych_Biezacy_Miesiac;
+END;
+/
+
+
+CREATE OR REPLACE FUNCTION Raport_Wpisow_Magazynowych_Biezacy_Miesiac RETURN INTEGER IS
+  v_ilosc INTEGER := 0;
+
+  CURSOR wpisy_cursor IS
+    SELECT W.data_wpisu, P.imie || ' ' || P.nazwisko AS pracownik,
+           Z.nazwa AS nazwa_zabawki, W.ilosc_sztuk
+    FROM Wpisy_Magazynowe W
+    JOIN Pracownicy P ON W.id_pracownika = P.id_pracownika
+    JOIN Zabawki Z ON W.id_zabawki = Z.id_zabawki
+    WHERE EXTRACT(MONTH FROM W.data_wpisu) = EXTRACT(MONTH FROM SYSDATE)
+    AND EXTRACT(YEAR FROM W.data_wpisu) = EXTRACT(YEAR FROM SYSDATE);
+
+BEGIN
+  FOR rekord IN wpisy_cursor LOOP
+    v_ilosc := v_ilosc + 1;
+
+    DBMS_OUTPUT.PUT_LINE('Data wpisu: ' || rekord.data_wpisu);
+    DBMS_OUTPUT.PUT_LINE('Pracownik: ' || rekord.pracownik);
+    DBMS_OUTPUT.PUT_LINE('Zabawka: ' || rekord.nazwa_zabawki);
+    DBMS_OUTPUT.PUT_LINE('Ilość sztuk: ' || rekord.ilosc_sztuk);
+    DBMS_OUTPUT.PUT_LINE('---------------------------------------');
+
+  END LOOP;
+
+  DBMS_OUTPUT.PUT_LINE('Ilość wpisów magazynowych z bieżącego miesiąca: ' || v_ilosc);
+  RETURN v_ilosc;
+END Raport_Wpisow_Magazynowych_Biezacy_Miesiac;
+/
+
+
+---------
+
+
+CREATE OR REPLACE FUNCTION Ilosc_Zabawek_W_Okresie(
+  p_data_poczatkowa DATE,
+  p_data_koncowa DATE
+) RETURN INTEGER IS
+  v_ilosc INTEGER := 0;
+
+BEGIN
+  SELECT COUNT(*) INTO v_ilosc
+  FROM Wpisy_magazynowe
+  WHERE data_wpisu BETWEEN p_data_poczatkowa AND p_data_koncowa;
+
+  DBMS_OUTPUT.PUT_LINE('Ilość zabawek stworzonych w okresie od ' || p_data_poczatkowa || ' do ' || p_data_koncowa || ': ' || v_ilosc);
+
+  RETURN v_ilosc;
+  
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Brak zabawek w podanym okresie.');
+    RETURN 0;
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Wystąpił błąd: ' || SQLERRM);
+    RETURN -1;
+END Ilosc_Zabawek_W_Okresie;
+/
+
+DECLARE
+  ilosc_zabawek INTEGER;
+BEGIN
+  ilosc_zabawek := Ilosc_Zabawek_W_Okresie(DATE '2023-04-01', DATE '2023-05-31');
+END;
+/
+
+--------------------------------------
+CREATE OR REPLACE FUNCTION Srednia_Cena_Zabawki_W_Kategorii(
+  p_id_kategorii INTEGER
+) RETURN NUMBER IS
+  v_srednia_cena NUMBER;
+
+BEGIN
+  SELECT AVG(cena)
+  INTO v_srednia_cena
+  FROM Zabawki
+  WHERE id_kategorii = p_id_kategorii;
+
+  IF v_srednia_cena IS NOT NULL THEN
+    DBMS_OUTPUT.PUT_LINE('Średnia cena zabawki w kategorii o ID ' || p_id_kategorii || ': ' || v_srednia_cena);
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Brak zabawek w kategorii o ID ' || p_id_kategorii);
+  END IF;
+
+  RETURN v_srednia_cena;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Brak zabawek w kategorii o ID ' || p_id_kategorii);
+    RETURN NULL;
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Wystąpił błąd: ' || SQLERRM);
+    RETURN NULL;
+END Srednia_Cena_Zabawki_W_Kategorii;
+/
+
+DECLARE
+  v_id_kategorii INTEGER := 1; 
+  v_srednia_cena NUMBER;
+BEGIN
+  v_srednia_cena := Srednia_Cena_Zabawki_W_Kategorii(v_id_kategorii);
+END;
+/
 

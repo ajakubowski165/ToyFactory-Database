@@ -1,3 +1,101 @@
+CREATE TABLE Materialy (
+    id_materialu INTEGER PRIMARY KEY,
+    nazwa_materialu VARCHAR2(30 CHAR) NOT NULL
+);
+
+CREATE TABLE Kategorie (
+    id_kategorii INTEGER PRIMARY KEY,
+    nazwa_kategorii VARCHAR2(30 CHAR)
+);
+
+CREATE TABLE Sposoby_Zaplaty (
+    id_sposobu_zaplaty INTEGER PRIMARY KEY,
+    sposob_zaplaty VARCHAR2(20 CHAR)
+);
+
+CREATE TABLE Zabawki (
+    id_zabawki     INTEGER PRIMARY KEY,
+    nazwa          VARCHAR2(60 CHAR) NOT NULL,
+    cena           FLOAT,
+    dostepna_ilosc INTEGER,
+    id_kategorii   INTEGER NOT NULL,
+    id_materialu   INTEGER NOT NULL,
+    FOREIGN KEY (id_kategorii) REFERENCES Kategorie (id_kategorii),
+    FOREIGN KEY (id_materialu) REFERENCES Materialy (id_materialu)
+);
+
+CREATE TABLE Adresy (
+    id_adresu INTEGER PRIMARY KEY,
+    kod_pocztowy VARCHAR2(30 CHAR) NOT NULL,
+    wojewodztwo VARCHAR2(30 CHAR),
+    powiat VARCHAR2(30 CHAR),
+    miejscowosc VARCHAR2(30 CHAR),
+    ulica VARCHAR2(30 CHAR)
+);
+
+CREATE TABLE Klienci (
+    id_klienta INTEGER PRIMARY KEY,
+    nazwa_firmy VARCHAR2(30 CHAR),
+    imie VARCHAR2(20 CHAR),
+    nazwisko VARCHAR2(30 CHAR),
+    pesel INTEGER,
+    id_adresu INTEGER NOT NULL,
+    nr_ulicy VARCHAR2(30 CHAR),
+    FOREIGN KEY (id_adresu) REFERENCES Adresy (id_adresu)
+);
+
+CREATE TABLE Zamowienia (
+    id_zamowienia       INTEGER PRIMARY KEY,
+    data_zamowienia     DATE NOT NULL,
+    status_zamowienia   VARCHAR2(20 CHAR),
+    id_klienta          INTEGER NOT NULL,
+    id_sposobu_zaplaty  INTEGER NOT NULL,
+    FOREIGN KEY (id_klienta) REFERENCES Klienci (id_klienta),
+    FOREIGN KEY (id_sposobu_zaplaty) REFERENCES Sposoby_Zaplaty (id_sposobu_zaplaty)
+);
+
+
+CREATE TABLE Pozycje_Zamowienia (
+    id_pozycji_zamowienia INTEGER PRIMARY KEY,
+    id_zamowienia INTEGER NOT NULL,
+    id_zabawki INTEGER NOT NULL,
+    ilosc_sztuk INTEGER,
+    FOREIGN KEY (id_zamowienia) REFERENCES Zamowienia (id_zamowienia),
+    FOREIGN KEY (id_zabawki) REFERENCES Zabawki (id_zabawki)
+);
+
+CREATE TABLE Faktury_sprzedazy (
+    nr_faktury INTEGER PRIMARY KEY,
+    id_zamowienia INTEGER NOT NULL,
+    data_wystawienia DATE,
+    FOREIGN KEY (id_zamowienia) REFERENCES Zamowienia (id_zamowienia)
+);
+
+CREATE TABLE Pracownicy (
+    id_pracownika INTEGER PRIMARY KEY,
+    imie VARCHAR2(20 CHAR),
+    nazwisko VARCHAR2(30 CHAR),
+    nr_telefonu INTEGER,
+    wynagrodzenie_podstawowe INTEGER,
+    stanowisko VARCHAR2(30 CHAR),
+    id_adresu INTEGER NOT NULL,
+    nr_ulicy VARCHAR2(30 CHAR),
+    FOREIGN KEY (id_adresu) REFERENCES Adresy (id_adresu)
+);
+
+
+CREATE TABLE Wpisy_Magazynowe (
+    id_wpisu INTEGER PRIMARY KEY,
+    data_wpisu DATE,
+    ilosc_sztuk INTEGER,
+    id_zabawki INTEGER NOT NULL,
+    id_pracownika INTEGER NOT NULL,
+    FOREIGN KEY (id_zabawki) REFERENCES Zabawki (id_zabawki),
+    FOREIGN KEY (id_pracownika) REFERENCES Pracownicy (id_pracownika)
+);
+
+
+
 INSERT INTO Materialy (id_materialu, nazwa_materialu) VALUES (1, 'Plastik');
 INSERT INTO Materialy (id_materialu, nazwa_materialu) VALUES (2, 'Drewno');
 INSERT INTO Materialy (id_materialu, nazwa_materialu) VALUES (3, 'Metal');
@@ -145,6 +243,8 @@ INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, 
 INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (24, 'Zabawkowy Swiat Marzen', 'Rafal', 'Jankowski', 24234567005, 24, '71X');
 INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (25, 'Zabawkowy Usmiech Dziecka', 'Dominika', 'Szczepańska', 25234567006, 25, '74Y');
 
+
+
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (1, TO_DATE('2023-09-21', 'YYYY-MM-DD'), 'W trakcie', 1, 1);
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (2, TO_DATE('2023-02-01', 'YYYY-MM-DD'), 'Zrealizowane', 2, 2);
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (3, TO_DATE('2023-11-01', 'YYYY-MM-DD'), 'W trakcie', 3, 3);
@@ -176,7 +276,7 @@ INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_kl
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (29, TO_DATE('2023-12-01', 'YYYY-MM-DD'), 'Zrealizowane', 4, 4);
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (30, TO_DATE('2023-12-06', 'YYYY-MM-DD'), 'W trakcie', 5, 5);
 
---wyrzucic cene jednostkowa
+
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk) VALUES (1, 1, 1, 3);
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk) VALUES (2, 1, 3, 2);
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk) VALUES (3, 1, 2, 1);
@@ -207,7 +307,6 @@ INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk) VALUES (28, 14, 11, 2);
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk) VALUES (29, 15, 14, 3);
 INSERT INTO Pozycje_Zamowienia (id_pozycji_zamowienia, id_zamowienia, id_zabawki, ilosc_sztuk) VALUES (30, 15, 17, 2);
-
 
 
 INSERT INTO Faktury_sprzedazy (nr_faktury, id_zamowienia, data_wystawienia) VALUES (1, 1, TO_DATE('2023-09-21', 'YYYY-MM-DD'));
@@ -289,6 +388,9 @@ INSERT INTO Wpisy_Magazynowe (id_wpisu, data_wpisu, ilosc_sztuk, id_zabawki, id_
 INSERT INTO Wpisy_Magazynowe (id_wpisu, data_wpisu, ilosc_sztuk, id_zabawki, id_pracownika) VALUES (23, TO_DATE('2023-08-17', 'YYYY-MM-DD'), 20, 23, 15);
 INSERT INTO Wpisy_Magazynowe (id_wpisu, data_wpisu, ilosc_sztuk, id_zabawki, id_pracownika) VALUES (24, TO_DATE('2023-10-17', 'YYYY-MM-DD'), 10, 24, 15);
 INSERT INTO Wpisy_Magazynowe (id_wpisu, data_wpisu, ilosc_sztuk, id_zabawki, id_pracownika) VALUES (25, TO_DATE('2023-09-18', 'YYYY-MM-DD'), 8, 25, 16);
+
+
+
 
 
 

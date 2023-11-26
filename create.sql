@@ -30,8 +30,7 @@ CREATE TABLE Adresy (
     wojewodztwo VARCHAR2(30 CHAR),
     powiat VARCHAR2(30 CHAR),
     miejscowosc VARCHAR2(30 CHAR),
-    ulica VARCHAR2(30 CHAR),
-    nr_ulicy VARCHAR2(30 CHAR)
+    ulica VARCHAR2(30 CHAR)
 );
 
 CREATE TABLE Klienci (
@@ -61,7 +60,6 @@ CREATE TABLE Pozycje_Zamowienia (
     id_zamowienia INTEGER NOT NULL,
     id_zabawki INTEGER NOT NULL,
     ilosc_sztuk INTEGER,
-    cena_jednostkowa FLOAT,
     FOREIGN KEY (id_zamowienia) REFERENCES Zamowienia (id_zamowienia),
     FOREIGN KEY (id_zabawki) REFERENCES Zabawki (id_zabawki)
 );
