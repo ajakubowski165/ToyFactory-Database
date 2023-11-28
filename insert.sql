@@ -246,21 +246,21 @@ INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzeni
 INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (2, 'Piotr', 'Nowak', 987654321, 5500, 'Kierownik działu marketingu', 27, '13B');
 INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (3, 'Magdalena', 'Jankowska', 555666777, 4800, 'Magazynier', 28, '14C');
 INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (4, 'Krzysztof', 'Wojcik', 333222111, 6000, 'Magazynier', 29, '15D');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (5, 'Monika', 'Lewandowska', 444555666, 5200, 'Specjalista ds. HR', 30, '16E');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (6, 'Michał', 'Wronski', 666555444, 5100, 'Analityk finansowy', 31, '17F');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (7, 'Karolina', 'Szymanska', 111222333, 5900, 'Kierownik działu logistyki', 32, '18G');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (5, 'Monika', 'Lewandowska', 444555666, 5200, 'Specjalista ds. marketingu', 30, '16E');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (6, 'Michał', 'Wronski', 666555444, 5100, 'Analityk', 31, '17F');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (7, 'Karolina', 'Szymanska', 111222333, 5900, 'Logistyk', 32, '18G');
 INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (8, 'Adam', 'Kaczmarek', 999888777, 4700, 'Kierowca', 33, '19H');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (9, 'Natalia', 'Dabrowska', 777888999, 5400, 'Specjalista ds. IT', 34, '20I');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (10, 'Kamil', 'Zielinski', 123789456, 6300, 'Asystent ds. sprzedazy', 35, '21J');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (9, 'Natalia', 'Dabrowska', 777888999, 5400, 'Księgowa', 34, '20I');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (10, 'Kamil', 'Zielinski', 123789456, 6300, 'Magazynier', 35, '21J');
 INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (11, 'Alicja', 'Pawlak', 987654321, 5200, 'Specjalista ds. marketingu', 36, '22K');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (12, 'Marcin', 'Olszewski', 333222111, 4800, 'Asystent ds. sprzedazy', 37, '23L');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (13, 'Oliwia', 'Kowalczyk', 444555666, 5900, 'Kierownik projektu', 38, '24M');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (14, 'Lukasz', 'Sikorski', 666555444, 5500, 'Specjalista ds. finansow', 39, '25N');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (15, 'Klaudia', 'Piotrowska', 111222333, 5100, 'Magazynier', 40, '26O');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (12, 'Marcin', 'Olszewski', 333222111, 4800, 'Analityk', 37, '23L');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (13, 'Oliwia', 'Kowalczyk', 444555666, 5900, 'Księgowa', 38, '24M');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (14, 'Lukasz', 'Sikorski', 666555444, 5500, 'Magazynier', 39, '25N');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (15, 'Klaudia', 'Piotrowska', 111222333, 5100, 'Specjalista ds. sprzedazy', 40, '26O');
 INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (16, 'Tomasz', 'Wisniewski', 999888777, 6000, 'Magazynier', 41, '27P');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (17, 'Weronika', 'Jabłonska', 777888999, 7400, 'Wiceprezes', 42, '28R');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (18, 'Bartosz', 'Czarnecki', 123789456, 6300, 'Analityk biznesowy', 43, '29S');
-INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (19, 'Aleksandra', 'Gorka', 987654321, 4700, 'Magazynier', 44, '30T');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (17, 'Weronika', 'Jabłonska', 777888999, 7400, 'Specjalista ds. sprzedazy', 42, '28R');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (18, 'Bartosz', 'Czarnecki', 123789456, 6300, 'Magazynier', 43, '29S');
+INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (19, 'Aleksandra', 'Gorka', 987654321, 4700, 'Specjalista ds. marketingu', 44, '30T');
 INSERT INTO Pracownicy (id_pracownika, imie, nazwisko, nr_telefonu, wynagrodzenie_podstawowe, stanowisko, id_adresu, nr_ulicy) VALUES (20, 'Patryk', 'Nowicki', 333222111, 5200, 'Magazynier', 45, '31U');
 
 
