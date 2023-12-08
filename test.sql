@@ -41,7 +41,7 @@ CREATE TABLE Klienci (
     pesel INTEGER,
     id_adresu INTEGER NOT NULL,
     nr_ulicy VARCHAR2(30 CHAR),
-    staly_klient BOOLEAN,
+    staly_klient NUMBER(1,0),
     FOREIGN KEY (id_adresu) REFERENCES Adresy (id_adresu)
 );
 
@@ -218,32 +218,31 @@ INSERT INTO Adresy (id_adresu, kod_pocztowy, wojewodztwo, powiat, miejscowosc, u
 INSERT INTO Adresy (id_adresu, kod_pocztowy, wojewodztwo, powiat, miejscowosc, ulica) VALUES (45, '35-140', 'Podkarpackie', 'Rzeszowski', 'Rzeszow', 'ul. Slowackiego');
 
 
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (1, 'Magiczne Zabawki', 'Anna', 'Nowak', 12345678901, 1, '2A', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (2, 'Kraina Zabaw', 'Piotr', 'Kowalski', 23456789012, 2, '5B', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (3, 'Skarby Dziecinstwa', 'Magdalena', 'Wisniewska', 34567890123, 3, '8C', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (4, 'Zabawkowy Raj', 'Marek', 'Lis', 45678901234, 4, '11D', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (5, 'Marzenia Dzieci', 'Katarzyna', 'Kwiatkowska', 56789012345, 5, '14E', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (6, 'Zabawkowe Cudo', 'Grzegorz', 'Nowicki', 67890123456, 6, '17F', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (7, 'Bajkowe Zabawki', 'Agnieszka', 'Pawlak', 78901234567, 7, '20G', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (8, 'Zabawkowy Swiat', 'Robert', 'Czarnecki', 89012345678, 8, '23H', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (9, 'Kolorowe Zabawki', 'Karolina', 'Jaworska', 90123456789, 9, '26I', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (10, 'Zabawkowy Skarbiec', 'Daniel', 'Szymanski', 10234567890, 10, '29J', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (11, 'Festiwal Zabawek', 'Dominika', 'Kaczmarek', 11234567891, 11, '32K', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (12, 'Zabawkowy Uśmiech', 'Mariusz', 'Piotrowski', 12234567892, 12, '35L', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (13, 'Krolestwo Zabawek', 'Oliwia', 'Zajac', 13234567893, 13, '38M', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (14, 'Zabawkowy Magazyn', 'Patryk', 'Kaminski', 14234567894, 14, '41N', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (15, 'Kraina Marzen', 'Anna', 'Lewandowska', 15234567895, 15, '44O', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (16, 'Zabawkowa Fantazja', 'Tomasz', 'Sawicki', 16234567896, 16, '47P', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (17, 'Kolorowy Swiat Zabawek', 'Natalia', 'Dabrowska', 17234567897, 17, '50Q', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (18, 'Zabawkowy Zaulek', 'Marcin', 'Zielinski', 18234567898, 18, '53R', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (19, 'Magiczny Sklepik', 'Monika', 'Wojcik', 19234567899, 19, '56S', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (20, 'Bajkowa Kraina', 'Kamil', 'Kubiak', 20234567001, 20, '59T', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (21, 'Zabawkowy Sen', 'Anna', 'Sokolowska', 21234567002, 21, '62U', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (22, 'Zabawkowe Przygody', 'Pawel', 'Kowalczyk', 22234567003, 22, '65V', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (23, 'Zabawkowe Spotkanie', 'Karolina', 'Michalak', 23234567004, 23, '68W', TRUE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (24, 'Zabawkowy Swiat Marzen', 'Rafal', 'Jankowski', 24234567005, 24, '71X', FALSE);
-INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy) VALUES (25, 'Zabawkowy Usmiech Dziecka', 'Dominika', 'Szczepańska', 25234567006, 25, '74Y', FALSE);
-
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (1, 'Magiczne Zabawki', 'Anna', 'Nowak', 12345678901, 1, '2A', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (2, 'Kraina Zabaw', 'Piotr', 'Kowalski', 23456789012, 2, '5B', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (3, 'Skarby Dziecinstwa', 'Magdalena', 'Wisniewska', 34567890123, 3, '8C', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (4, 'Zabawkowy Raj', 'Marek', 'Lis', 45678901234, 4, '11D', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (5, 'Marzenia Dzieci', 'Katarzyna', 'Kwiatkowska', 56789012345, 5, '14E', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (6, 'Zabawkowe Cudo', 'Grzegorz', 'Nowicki', 67890123456, 6, '17F', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (7, 'Bajkowe Zabawki', 'Agnieszka', 'Pawlak', 78901234567, 7, '20G', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (8, 'Zabawkowy Swiat', 'Robert', 'Czarnecki', 89012345678, 8, '23H', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (9, 'Kolorowe Zabawki', 'Karolina', 'Jaworska', 90123456789, 9, '26I', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (10, 'Zabawkowy Skarbiec', 'Daniel', 'Szymanski', 10234567890, 10, '29J', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (11, 'Festiwal Zabawek', 'Dominika', 'Kaczmarek', 11234567891, 11, '32K', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (12, 'Zabawkowy Uśmiech', 'Mariusz', 'Piotrowski', 12234567892, 12, '35L', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (13, 'Krolestwo Zabawek', 'Oliwia', 'Zajac', 13234567893, 13, '38M', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (14, 'Zabawkowy Magazyn', 'Patryk', 'Kaminski', 14234567894, 14, '41N', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (15, 'Kraina Marzen', 'Anna', 'Lewandowska', 15234567895, 15, '44O', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (16, 'Zabawkowa Fantazja', 'Tomasz', 'Sawicki', 16234567896, 16, '47P', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (17, 'Kolorowy Swiat Zabawek', 'Natalia', 'Dabrowska', 17234567897, 17, '50Q', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (18, 'Zabawkowy Zaulek', 'Marcin', 'Zielinski', 18234567898, 18, '53R', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (19, 'Magiczny Sklepik', 'Monika', 'Wojcik', 19234567899, 19, '56S', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (20, 'Bajkowa Kraina', 'Kamil', 'Kubiak', 20234567001, 20, '59T', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (21, 'Zabawkowy Sen', 'Anna', 'Sokolowska', 21234567002, 21, '62U', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (22, 'Zabawkowe Przygody', 'Pawel', 'Kowalczyk', 22234567003, 22, '65V', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (23, 'Zabawkowe Spotkanie', 'Karolina', 'Michalak', 23234567004, 23, '68W', 1);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (24, 'Zabawkowy Swiat Marzen', 'Rafal', 'Jankowski', 24234567005, 24, '71X', 0);
+INSERT INTO Klienci (id_klienta, nazwa_firmy, imie, nazwisko, pesel, id_adresu, nr_ulicy, staly_klient) VALUES (25, 'Zabawkowy Usmiech Dziecka', 'Dominika', 'Szczepańska', 25234567006, 25, '74Y', 0);
 
 
 INSERT INTO Zamowienia (id_zamowienia, data_zamowienia, status_zamowienia, id_klienta, id_sposobu_zaplaty) VALUES (1, TO_DATE('2023-09-21', 'YYYY-MM-DD'), 'W trakcie', 1, 1);
